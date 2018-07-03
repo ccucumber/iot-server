@@ -5,7 +5,7 @@ from datetime import datetime as dt
 app = Flask(__name__)
 
 # Influx access
-host = 'localhost'
+host = '172.17.0.1'
 port = 8086
 USER = 'root'
 PASSWORD = 'root'
@@ -30,8 +30,8 @@ def request2points(data):
         "measurement": '{}'.format(device_id),
         "time": now.strftime('%Y-%m-%dT%H:%M:%SZ'),
         "fields": {
-            "value_0": value_0,
-            "value_1": value_1
+            "in_1": value_0,
+            "in_2": value_1
         }
     }]
 
@@ -55,4 +55,4 @@ def dupa(dev_id, value):
     return 'dupa'
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5432, debug=True)
+    app.run(host='0.0.0.0', port=81, debug=True)
