@@ -67,6 +67,7 @@ def dupa(dev_id, value):
 
 
 def tick():
+    global points
     with points_lock:
         #temp_points=copy.deepcopy(points)
         temp_points=list(points)
