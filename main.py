@@ -1,6 +1,10 @@
 from flask import Flask, request
 from influxdb import InfluxDBClient
 from datetime import datetime as dt
+import logging
+logfl = logging.getLogger('werkzeug')
+logfl.setLevel(logging.ERROR)
+
 
 app = Flask(__name__)
 
@@ -12,6 +16,7 @@ PASSWORD = 'root'
 DBNAME = 'tutorial'
 DB = InfluxDBClient(host, port, USER, PASSWORD, DBNAME)
 DB.create_database(DBNAME)
+
 
 @app.route('/')
 def hello_world():
