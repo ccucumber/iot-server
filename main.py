@@ -55,6 +55,7 @@ def zupa():
     point = request2point(request.json)
     with points_lock:
         points.append(point)
+    # print(points)
     return 'dupa'
 
 @app.route('/dupa/<dev_id>/<value>', methods=['POST'])
@@ -72,7 +73,7 @@ def tick():
         #temp_points=copy.deepcopy(points)
         temp_points=list(points)
         points=[]
-    print(points)
+    print(temp_points)
     DB.write_points(temp_points)
 
     
