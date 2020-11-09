@@ -48,8 +48,8 @@ def request2point(data):
 
 @app.route('/zupa', methods=['POST', 'GET'])
 def zupa():
-    # print(request.headers)
-    # print(request.json)
+    print(request.headers)
+    print(request.json)
     point = request2point(request.json)
     with points_lock:
         points.append(point)
