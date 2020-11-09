@@ -1,5 +1,5 @@
 #from flask import Flask, request
-from bottle import route, run, request
+from bottle import Bottle, run, request
 
 from threading import Lock
 import copy
@@ -12,6 +12,7 @@ logfl.setLevel(logging.ERROR)
 
 
 #app = Flask(__name__)
+app=Bottle()
 
 # Influx access
 host = '172.17.0.1'
@@ -45,7 +46,7 @@ def request2point(data):
 
     return point
 
-@route('/zupa', methods=['POST', 'GET'])
+@app.route('/zupa', methods=['POST', 'GET'])
 def zupa():
     # print(request.headers)
     # print(request.json)
@@ -55,7 +56,7 @@ def zupa():
     # print(points)
     return 'dupa'
 
-@route('/dupa/<dev_id>/<value>', methods=['POST'])
+@app.route('/dupa/<dev_id>/<value>', methods=['POST'])
 def dupa(dev_id, value):
     print(request.view_args['dev_id'])
     print(request.view_args['value'])
@@ -80,5 +81,5 @@ if __name__ == '__main__':
     scheduler.add_job(tick, 'interval', seconds=5)
     scheduler.start()
     #app.run(host='0.0.0.0', port=81, debug=True)
-    run(host='0.0.0.0', port=81, debug=True)
+    run(app, host='0.0.0.0', port=81, debug=True)
 
