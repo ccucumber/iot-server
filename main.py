@@ -1,5 +1,5 @@
 #from flask import Flask, request
-from bottle import Bottle, run, request
+from bottle import Bottle, run, route, request
 
 from threading import Lock
 import copy
@@ -46,7 +46,7 @@ def request2point(data):
 
     return point
 
-@app.route('/zupa', methods=['POST', 'GET'])
+@app.route('/zupa', method='POST')
 def zupa():
     print(request.headers)
     print(request.json)
@@ -56,7 +56,7 @@ def zupa():
     # print(points)
     return 'dupa'
 
-@app.route('/dupa/<dev_id>/<value>', methods=['POST'])
+@app.route('/dupa/<dev_id>/<value>', method='POST')
 def dupa(dev_id, value):
     print(request.view_args['dev_id'])
     print(request.view_args['value'])
