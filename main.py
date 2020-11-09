@@ -1,4 +1,6 @@
-from flask import Flask, request
+#from flask import Flask, request
+from bottle import route, run, request
+
 from threading import Lock
 import copy
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -9,7 +11,7 @@ logfl = logging.getLogger('werkzeug')
 logfl.setLevel(logging.ERROR)
 
 
-app = Flask(__name__)
+#app = Flask(__name__)
 
 # Influx access
 host = '172.17.0.1'
@@ -22,11 +24,6 @@ DB.create_database(DBNAME)
 
 points = []
 points_lock = Lock()
-
-
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
 
 def request2point(data):
     """ JSON in, influx format out """
@@ -48,7 +45,7 @@ def request2point(data):
 
     return point
 
-@app.route('/zupa', methods=['POST', 'GET'])
+@route('/zupa', methods=['POST', 'GET'])
 def zupa():
     # print(request.headers)
     # print(request.json)
@@ -58,7 +55,7 @@ def zupa():
     # print(points)
     return 'dupa'
 
-@app.route('/dupa/<dev_id>/<value>', methods=['POST'])
+@route('/dupa/<dev_id>/<value>', methods=['POST'])
 def dupa(dev_id, value):
     print(request.view_args['dev_id'])
     print(request.view_args['value'])
@@ -82,5 +79,6 @@ if __name__ == '__main__':
     scheduler = BackgroundScheduler()
     scheduler.add_job(tick, 'interval', seconds=5)
     scheduler.start()
-    app.run(host='0.0.0.0', port=81, debug=True)
+    #app.run(host='0.0.0.0', port=81, debug=True)
+    run(host='0.0.0.0', port=81, debug=True)
 
